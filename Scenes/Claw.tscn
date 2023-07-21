@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://cyht1gec3s4jg"]
+
+[ext_resource type="Script" path="res://Scripts/Claws/AngleLimiter.cs" id="1_gypss"]
+[ext_resource type="Texture2D" uid="uid://c7chtxd8sq0ir" path="res://Sprites/ClawMachine/Claws/Claw.png" id="2_8cfko"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hle26"]
+size = Vector2(3, 16)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_prigc"]
+radius = 1.81066
+height = 14.5
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_n0rpa"]
+diffuse_texture = ExtResource("2_8cfko")
+
+[node name="Claw" type="RigidBody2D"]
+collision_layer = 2
+collision_mask = 7
+center_of_mass_mode = 1
+script = ExtResource("1_gypss")
+_rotationUpperLimit = 0.785398
+
+[node name="Box" type="CollisionShape2D" parent="."]
+position = Vector2(0, 8)
+shape = SubResource("RectangleShape2D_hle26")
+
+[node name="Capsule" type="CollisionShape2D" parent="."]
+position = Vector2(4.15, 19.15)
+rotation = -0.785398
+shape = SubResource("CapsuleShape2D_prigc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(4.5, 12)
+texture = SubResource("CanvasTexture_n0rpa")

@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://dov5co3f3gaid"]
+
+[ext_resource type="Texture2D" uid="uid://cuu0ggmhbwrr5" path="res://Sprites/PrizeBall/Player/Pupil.png" id="1_lkqcs"]
+[ext_resource type="Script" path="res://Scripts/PupilController.cs" id="2_svygv"]
+
+[node name="Pupil" type="Sprite2D"]
+texture = ExtResource("1_lkqcs")
+offset = Vector2(0, 1)
+script = ExtResource("2_svygv")

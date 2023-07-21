@@ -1,0 +1,1036 @@
+[gd_scene load_steps=67 format=3 uid="uid://q5l66jl40rkk"]
+
+[ext_resource type="Script" path="res://Scripts/GameManager.cs" id="1_efpvj"]
+[ext_resource type="Texture2D" uid="uid://ckqp6baq0og06" path="res://Sprites/Background.png" id="3_0epwk"]
+[ext_resource type="Script" path="res://Scripts/Claws/ClawsController.cs" id="3_yocqp"]
+[ext_resource type="Texture2D" uid="uid://14qyygmhjj2x" path="res://Sprites/ClawMachine/Window_Mask.png" id="7_frbu0"]
+[ext_resource type="PackedScene" uid="uid://buwpy5g1bx4ex" path="res://Scenes/PrizeBall.tscn" id="8_1d7dw"]
+[ext_resource type="PackedScene" uid="uid://cyht1gec3s4jg" path="res://Scenes/Claw.tscn" id="8_01kb0"]
+[ext_resource type="Texture2D" uid="uid://r0rq6adq18o2" path="res://Sprites/ClawMachine/Window_Light.png" id="8_cf7bf"]
+[ext_resource type="Texture2D" uid="uid://bhpq0vso2mpra" path="res://Sprites/ClawMachine/Claws/Root.png" id="9_g0lbf"]
+[ext_resource type="Script" path="res://Scripts/PlayerController.cs" id="10_h1ftr"]
+[ext_resource type="Texture2D" uid="uid://bnhok37e41m2r" path="res://Sprites/ClawMachine/Claws/Base.png" id="12_ebc4q"]
+[ext_resource type="Script" path="res://Scripts/PointTrigger.cs" id="12_f2sol"]
+[ext_resource type="Script" path="res://Scripts/Claws/BaseController.cs" id="13_lq5o5"]
+[ext_resource type="AudioStream" uid="uid://ds8l6wvkgvd2l" path="res://Audio/ClawServo.ogg" id="16_x0307"]
+[ext_resource type="Texture2D" uid="uid://bsxqljis7c5y0" path="res://Sprites/PrizeBall/Player/Eyes.png" id="18_3pii8"]
+[ext_resource type="Texture2D" uid="uid://bvypon2hfv2b6" path="res://Sprites/PrizeBall/Player/Arrow_Under.png" id="18_t7gg5"]
+[ext_resource type="Theme" uid="uid://ch48e0no6laiy" path="res://Theme.tres" id="18_xngp0"]
+[ext_resource type="Script" path="res://Scripts/HighScoreManager.cs" id="19_br44m"]
+[ext_resource type="Texture2D" uid="uid://cov0eb22abpc3" path="res://Sprites/PrizeBall/Player/Arrow_Progress.png" id="19_hmeq6"]
+[ext_resource type="PackedScene" uid="uid://dov5co3f3gaid" path="res://Scenes/Pupil.tscn" id="19_komou"]
+[ext_resource type="Script" path="res://Scripts/OperatorManager.cs" id="20_xrkcq"]
+[ext_resource type="Texture2D" uid="uid://ncs8djvxsrfo" path="res://Sprites/ClawMachine/Window.png" id="21_kj5uw"]
+[ext_resource type="Texture2D" uid="uid://x04g25ybp04v" path="res://Sprites/Operator/ThoughtBubble.png" id="23_be5ht"]
+[ext_resource type="Texture2D" uid="uid://dce0ie382ljtn" path="res://Sprites/Operator/ThoughtTrail.png" id="24_2b1if"]
+[ext_resource type="AudioStream" uid="uid://vpt333sbmtc8" path="res://Audio/PrizeChuteEntered.ogg" id="24_e20gc"]
+[ext_resource type="Texture2D" uid="uid://dc1ltcrmkojj8" path="res://Sprites/Operator/AngryEmote.png" id="25_t3bo0"]
+[ext_resource type="Texture2D" uid="uid://d4m3n55yxbxpt" path="res://Sprites/Operator/AngerMarks.png" id="26_s24dk"]
+[ext_resource type="Texture2D" uid="uid://bs4iu8axaxt6x" path="res://Sprites/Spotlight.png" id="28_rgkgi"]
+[ext_resource type="Texture2D" uid="uid://b86f1kidq8ruo" path="res://Sprites/ClawMachine/StreakingLights.png" id="30_34jh2"]
+[ext_resource type="AudioStream" uid="uid://c2mvbt77vmfg5" path="res://Audio/ClawMachineMusic.ogg" id="32_me8l6"]
+[ext_resource type="AudioStream" uid="uid://c3x7k5r6toum6" path="res://Audio/Anger.ogg" id="32_xdyn4"]
+
+[sub_resource type="Environment" id="Environment_iw8x8"]
+background_mode = 3
+glow_enabled = true
+glow_levels/2 = 3.0
+glow_levels/4 = 1.0
+glow_strength = 1.35
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2m7wr"]
+bg_color = Color(0, 0, 0, 1)
+anti_aliasing = false
+
+[sub_resource type="Animation" id="Animation_ih5mu"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Top:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Bottom:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_k6uuo"]
+resource_name = "game_over"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Top:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Bottom:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(3, 4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../../GameManager")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"ReloadScene"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_id2ff"]
+_data = {
+"RESET": SubResource("Animation_ih5mu"),
+"game_over": SubResource("Animation_k6uuo")
+}
+
+[sub_resource type="Animation" id="Animation_8yx41"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.7]
+}
+
+[sub_resource type="Animation" id="Animation_0f54j"]
+resource_name = "default"
+length = 10.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 9.6, 9.7, 9.8, 9.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.7, 0.7, 0.35, 0.45, 0.35]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_h7rdi"]
+_data = {
+"RESET": SubResource("Animation_8yx41"),
+"default": SubResource("Animation_0f54j")
+}
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_n2ops"]
+normal = Vector2(1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qpse2"]
+normal = Vector2(-1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qk15i"]
+normal = Vector2(0, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_cx21i"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_gbemt"]
+light_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y6lsr"]
+atlas = ExtResource("30_34jh2")
+region = Rect2(0, 0, 118, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xen2x"]
+atlas = ExtResource("30_34jh2")
+region = Rect2(118, 0, 118, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_httad"]
+atlas = ExtResource("30_34jh2")
+region = Rect2(236, 0, 118, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ytuuo"]
+atlas = ExtResource("30_34jh2")
+region = Rect2(354, 0, 118, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tgyne"]
+atlas = ExtResource("30_34jh2")
+region = Rect2(472, 0, 118, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nofor"]
+atlas = ExtResource("30_34jh2")
+region = Rect2(590, 0, 118, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3yw01"]
+atlas = ExtResource("30_34jh2")
+region = Rect2(708, 0, 118, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dt36l"]
+atlas = ExtResource("30_34jh2")
+region = Rect2(826, 0, 118, 144)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_blwk7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y6lsr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xen2x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_httad")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ytuuo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tgyne")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nofor")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3yw01")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dt36l")
+}],
+"loop": true,
+"name": &"default",
+"speed": 30.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4rypx"]
+radius = 3.5
+height = 12.0
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_3ryim"]
+diffuse_texture = ExtResource("9_g0lbf")
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_xvpnb"]
+diffuse_texture = ExtResource("12_ebc4q")
+
+[sub_resource type="Curve" id="Curve_2pli6"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.49474, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_u2lae"]
+curve = SubResource("Curve_2pli6")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_c7l8f"]
+lifetime_randomness = 0.3
+emission_shape = 3
+emission_box_extents = Vector3(5, 2, 1)
+particle_flag_disable_z = true
+gravity = Vector3(0, 98, 0)
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_curve = SubResource("CurveTexture_u2lae")
+color = Color(0, 1, 1, 1)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_58ogb"]
+light_mode = 1
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pqhg4"]
+radius = 1.0
+height = 32.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7lfhw"]
+size = Vector2(19, 16)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_pnqn0"]
+light_mode = 1
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_fu8ke"]
+light_mode = 1
+
+[sub_resource type="Animation" id="Animation_a4o6j"]
+resource_name = "Anger"
+length = 2.96
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.96),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ThoughtTrail3:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.4, 0.6, 2.36, 2.56),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ThoughtTrail3:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.4, 0.6, 2.36, 2.56),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(1, 1), Vector2(1, 1), Vector2(1e-05, 1e-05)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ThoughtTrail2:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.2, 0.4, 2.56, 2.76),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("ThoughtTrail2:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.2, 0.4, 2.56, 2.76),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(1, 1), Vector2(1, 1), Vector2(1e-05, 1e-05)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("ThoughtTrail:self_modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.2, 2.76, 2.96),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("ThoughtTrail:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.2, 2.76, 2.96),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(1, 1), Vector2(1, 1), Vector2(1e-05, 1e-05)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("ThoughtBubble:self_modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0.6, 0.8, 2.16, 2.36),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("ThoughtBubble:scale")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0.6, 0.8, 2.16, 2.36),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(1, 1), Vector2(1, 1), Vector2(1e-05, 1e-05)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("AngryEmote:modulate")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0.8, 1, 1.96, 2.16),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("AngryEmote:scale")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0.8, 1, 1.96, 2.16),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(1, 1), Vector2(1, 1), Vector2(1e-05, 1e-05)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("AngryEmote:position")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(1, 1.04, 1.08, 1.12, 1.16, 1.2, 1.24, 1.28, 1.32, 1.36, 1.4, 1.44, 1.48, 1.52, 1.56, 1.6, 1.64, 1.68, 1.72, 1.76, 1.8, 1.84, 1.88, 1.92, 1.96),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(48, -135), Vector2(50, -135), Vector2(48, -135), Vector2(46, -135), Vector2(48, -135), Vector2(50, -135), Vector2(48, -135), Vector2(46, -135), Vector2(48, -135), Vector2(50, -135), Vector2(48, -135), Vector2(46, -135), Vector2(48, -135), Vector2(50, -135), Vector2(48, -135), Vector2(46, -135), Vector2(48, -135), Vector2(50, -135), Vector2(48, -135), Vector2(46, -135), Vector2(48, -135), Vector2(50, -135), Vector2(48, -135), Vector2(46, -135), Vector2(48, -135)]
+}
+tracks/12/type = "method"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath(".")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"ShakePrizes"
+}]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("AngryEmote/AngerMarks:frame")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(1, 1.16, 1.32, 1.48, 1.64, 1.8, 1.96),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 0, 1, 0, 1, 0]
+}
+
+[sub_resource type="Animation" id="Animation_04l68"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ThoughtTrail3:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ThoughtTrail3:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ThoughtTrail2:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("ThoughtTrail2:self_modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("ThoughtTrail:self_modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("ThoughtTrail:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("ThoughtBubble:self_modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("ThoughtBubble:scale")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("AngryEmote:modulate")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("AngryEmote:scale")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("AngryEmote:position")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(48, -135)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("AngryEmote/AngerMarks:frame")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wvx6a"]
+_data = {
+"Anger": SubResource("Animation_a4o6j"),
+"RESET": SubResource("Animation_04l68")
+}
+
+[node name="Main" type="Node2D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_iw8x8")
+
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource("1_efpvj")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="GameOverScreen" type="Panel" parent="UI"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_2m7wr")
+
+[node name="Top" type="Label" parent="UI/GameOverScreen"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -7.0
+offset_bottom = 7.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("18_xngp0")
+theme_override_font_sizes/font_size = 10
+text = "They finally got the prize they wanted..."
+horizontal_alignment = 1
+
+[node name="Bottom" type="Label" parent="UI/GameOverScreen"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = 6.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("18_xngp0")
+theme_override_font_sizes/font_size = 30
+text = "YOU"
+horizontal_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/GameOverScreen"]
+libraries = {
+"": SubResource("AnimationLibrary_id2ff")
+}
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("32_me8l6")
+volume_db = -80.0
+autoplay = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(160, -90)
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.298039, 0.298039, 0.298039, 1)
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(160, -90)
+texture = ExtResource("3_0epwk")
+
+[node name="Spotlight" type="PointLight2D" parent="."]
+position = Vector2(160, -90)
+energy = 0.7
+texture = ExtResource("28_rgkgi")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Spotlight"]
+autoplay = "default"
+libraries = {
+"": SubResource("AnimationLibrary_h7rdi")
+}
+
+[node name="ClawMachine" type="Node2D" parent="."]
+position = Vector2(160, -90)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="ClawMachine"]
+collision_mask = 7
+
+[node name="Left" type="CollisionShape2D" parent="ClawMachine/StaticBody2D"]
+position = Vector2(-56, -13)
+shape = SubResource("WorldBoundaryShape2D_n2ops")
+
+[node name="Right" type="CollisionShape2D" parent="ClawMachine/StaticBody2D"]
+position = Vector2(56, -13)
+shape = SubResource("WorldBoundaryShape2D_qpse2")
+
+[node name="Top" type="CollisionShape2D" parent="ClawMachine/StaticBody2D"]
+position = Vector2(0, -90)
+shape = SubResource("WorldBoundaryShape2D_qk15i")
+
+[node name="Bottom" type="CollisionShape2D" parent="ClawMachine/StaticBody2D"]
+position = Vector2(0, 64)
+shape = SubResource("WorldBoundaryShape2D_cx21i")
+
+[node name="StreakingLights" type="AnimatedSprite2D" parent="ClawMachine"]
+self_modulate = Color(1.5, 1.5, 1.5, 1)
+material = SubResource("CanvasItemMaterial_gbemt")
+position = Vector2(0, -5)
+sprite_frames = SubResource("SpriteFrames_blwk7")
+autoplay = "default"
+frame_progress = 0.881485
+
+[node name="Window_Light" type="PointLight2D" parent="ClawMachine"]
+position = Vector2(0, -5)
+color = Color(1, 0.895, 0.7, 1)
+energy = 0.8
+texture = ExtResource("8_cf7bf")
+
+[node name="Window_Mask" type="Sprite2D" parent="ClawMachine"]
+clip_children = 1
+position = Vector2(0, -5)
+texture = ExtResource("7_frbu0")
+
+[node name="Claws" type="Node2D" parent="ClawMachine/Window_Mask"]
+position = Vector2(0, -69)
+script = ExtResource("3_yocqp")
+
+[node name="Root" type="AnimatableBody2D" parent="ClawMachine/Window_Mask/Claws"]
+position = Vector2(-39.5, 0)
+collision_layer = 2
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClawMachine/Window_Mask/Claws/Root"]
+position = Vector2(0, 6)
+shape = SubResource("CapsuleShape2D_4rypx")
+
+[node name="Sprite2D" type="Sprite2D" parent="ClawMachine/Window_Mask/Claws/Root"]
+position = Vector2(0.5, 6)
+texture = SubResource("CanvasTexture_3ryim")
+
+[node name="RootToBase" type="GrooveJoint2D" parent="ClawMachine/Window_Mask/Claws/Root"]
+position = Vector2(0, 12)
+node_a = NodePath("..")
+node_b = NodePath("../../Base")
+length = 76.0
+initial_offset = 1.0
+
+[node name="Claw_L" parent="ClawMachine/Window_Mask/Claws" instance=ExtResource("8_01kb0")]
+position = Vector2(-50, 37)
+
+[node name="Claw_R" parent="ClawMachine/Window_Mask/Claws" instance=ExtResource("8_01kb0")]
+position = Vector2(-29, 37)
+_rotationLowerLimit = -0.785398
+_rotationUpperLimit = 0.0
+
+[node name="Capsule" parent="ClawMachine/Window_Mask/Claws/Claw_R" index="1"]
+position = Vector2(-4.25, 19.25)
+rotation = 0.785398
+
+[node name="Sprite2D" parent="ClawMachine/Window_Mask/Claws/Claw_R" index="2"]
+position = Vector2(-4.5, 12)
+flip_h = true
+
+[node name="Base" type="RigidBody2D" parent="ClawMachine/Window_Mask/Claws"]
+position = Vector2(-39.5, 13)
+collision_layer = 2
+collision_mask = 7
+mass = 10.0
+center_of_mass_mode = 1
+angular_damp = 15.9
+script = ExtResource("13_lq5o5")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ClawMachine/Window_Mask/Claws/Base"]
+polygon = PackedVector2Array(-3, 14, -3, 0, 3, 0, 3, 14, 12, 17, 12, 24, -12, 24, -12, 17)
+
+[node name="Sprite2D" type="Sprite2D" parent="ClawMachine/Window_Mask/Claws/Base"]
+position = Vector2(0, 24)
+texture = SubResource("CanvasTexture_xvpnb")
+
+[node name="ProximityTrigger" type="Area2D" parent="ClawMachine/Window_Mask/Claws/Base"]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ClawMachine/Window_Mask/Claws/Base/ProximityTrigger"]
+polygon = PackedVector2Array(-4, -1, 4, -1, 4, 13, 13, 16, 13, 40, 4, 50, -4, 50, -13, 40, -13, 16, -4, 13)
+
+[node name="BaseToClaw1" type="PinJoint2D" parent="ClawMachine/Window_Mask/Claws/Base"]
+position = Vector2(-10.5, 24)
+node_a = NodePath("..")
+node_b = NodePath("../../Claw_L")
+
+[node name="BaseToClaw2" type="PinJoint2D" parent="ClawMachine/Window_Mask/Claws/Base"]
+position = Vector2(10.5, 24)
+node_a = NodePath("..")
+node_b = NodePath("../../Claw_R")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="ClawMachine/Window_Mask/Claws/Base"]
+stream = ExtResource("16_x0307")
+
+[node name="PrizeBall" parent="ClawMachine/Window_Mask" instance=ExtResource("8_1d7dw")]
+position = Vector2(-7, 61)
+
+[node name="Top" parent="ClawMachine/Window_Mask/PrizeBall" index="1"]
+self_modulate = Color(1, 0.984314, 0, 1)
+
+[node name="PrizeBall2" parent="ClawMachine/Window_Mask" instance=ExtResource("8_1d7dw")]
+position = Vector2(41, 61)
+
+[node name="Top" parent="ClawMachine/Window_Mask/PrizeBall2" index="1"]
+self_modulate = Color(0, 0.415686, 1, 1)
+
+[node name="Player" parent="ClawMachine/Window_Mask" instance=ExtResource("8_1d7dw")]
+position = Vector2(17, 62)
+script = ExtResource("10_h1ftr")
+
+[node name="Sweat" type="GPUParticles2D" parent="ClawMachine/Window_Mask/Player"]
+position = Vector2(0, -4)
+emitting = false
+amount = 4
+process_material = SubResource("ParticleProcessMaterial_c7l8f")
+lifetime = 0.6
+visibility_rect = Rect2(-4.88441, -2.66253, 10.0983, 19.7529)
+
+[node name="Eyes" type="Sprite2D" parent="ClawMachine/Window_Mask/Player"]
+position = Vector2(0, -6)
+texture = ExtResource("18_3pii8")
+
+[node name="Pupil_L" parent="ClawMachine/Window_Mask/Player/Eyes" instance=ExtResource("19_komou")]
+position = Vector2(-3, 0)
+
+[node name="Pupil_R" parent="ClawMachine/Window_Mask/Player/Eyes" instance=ExtResource("19_komou")]
+position = Vector2(3, 0)
+
+[node name="Pivot" type="Node2D" parent="ClawMachine/Window_Mask/Player"]
+z_index = 1
+
+[node name="ChargeBar" type="TextureProgressBar" parent="ClawMachine/Window_Mask/Player/Pivot"]
+material = SubResource("CanvasItemMaterial_58ogb")
+offset_top = -4.0
+offset_right = 16.0
+offset_bottom = 4.0
+step = 0.0
+texture_under = ExtResource("18_t7gg5")
+texture_progress = ExtResource("19_hmeq6")
+
+[node name="PrizeChute" type="StaticBody2D" parent="ClawMachine/Window_Mask"]
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClawMachine/Window_Mask/PrizeChute"]
+position = Vector2(-23, 53)
+shape = SubResource("CapsuleShape2D_pqhg4")
+
+[node name="Window" type="Sprite2D" parent="ClawMachine"]
+position = Vector2(0, -5)
+texture = ExtResource("21_kj5uw")
+
+[node name="PointTrigger" type="Area2D" parent="ClawMachine"]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+script = ExtResource("12_f2sol")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClawMachine/PointTrigger"]
+position = Vector2(-46.5, 56)
+shape = SubResource("RectangleShape2D_7lfhw")
+
+[node name="Score" type="Label" parent="ClawMachine/PointTrigger"]
+material = SubResource("CanvasItemMaterial_pnqn0")
+offset_left = -26.0
+offset_top = 74.0
+offset_right = -8.0
+offset_bottom = 86.0
+theme = ExtResource("18_xngp0")
+theme_override_font_sizes/font_size = 8
+text = "000"
+horizontal_alignment = 1
+
+[node name="Begin" type="Marker2D" parent="ClawMachine/PointTrigger"]
+position = Vector2(0, -82)
+
+[node name="End" type="Marker2D" parent="ClawMachine/PointTrigger"]
+position = Vector2(48, -82)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="ClawMachine/PointTrigger"]
+position = Vector2(-39, 64)
+stream = ExtResource("24_e20gc")
+
+[node name="Operator" type="Node2D" parent="."]
+visible = false
+material = SubResource("CanvasItemMaterial_fu8ke")
+script = ExtResource("20_xrkcq")
+
+[node name="ThoughtBubble" type="Sprite2D" parent="Operator"]
+self_modulate = Color(1, 1, 1, 0)
+use_parent_material = true
+position = Vector2(48, -135)
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("23_be5ht")
+
+[node name="ThoughtTrail" type="Sprite2D" parent="Operator"]
+self_modulate = Color(1, 1, 1, 0)
+use_parent_material = true
+position = Vector2(75, -72)
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("24_2b1if")
+
+[node name="ThoughtTrail2" type="Sprite2D" parent="Operator"]
+self_modulate = Color(1, 1, 1, 0)
+use_parent_material = true
+position = Vector2(58, -83)
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("24_2b1if")
+
+[node name="ThoughtTrail3" type="Sprite2D" parent="Operator"]
+self_modulate = Color(1, 1, 1, 0)
+use_parent_material = true
+position = Vector2(48, -100)
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("24_2b1if")
+
+[node name="AngryEmote" type="Sprite2D" parent="Operator"]
+modulate = Color(1, 1, 1, 0)
+use_parent_material = true
+position = Vector2(48, -135)
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("25_t3bo0")
+
+[node name="AngerMarks" type="Sprite2D" parent="Operator/AngryEmote"]
+use_parent_material = true
+position = Vector2(11, -10)
+texture = ExtResource("26_s24dk")
+hframes = 2
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Operator"]
+position = Vector2(48, -135)
+stream = ExtResource("32_xdyn4")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Operator"]
+libraries = {
+"": SubResource("AnimationLibrary_wvx6a")
+}
+
+[node name="HighScore" type="Label" parent="."]
+offset_left = 245.0
+offset_top = -100.0
+offset_right = 299.0
+offset_bottom = -88.0
+theme = ExtResource("18_xngp0")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 8
+text = "High Score"
+horizontal_alignment = 1
+script = ExtResource("19_br44m")
+
+[node name="Value" type="Label" parent="HighScore"]
+layout_mode = 0
+offset_top = 10.0
+offset_right = 55.0
+offset_bottom = 22.0
+theme = ExtResource("18_xngp0")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 8
+text = "1st Time? ;)"
+horizontal_alignment = 1
+
+[editable path="ClawMachine/Window_Mask/Claws/Claw_R"]
+[editable path="ClawMachine/Window_Mask/PrizeBall"]
+[editable path="ClawMachine/Window_Mask/PrizeBall2"]
