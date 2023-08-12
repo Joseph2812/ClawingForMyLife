@@ -9,14 +9,14 @@ public partial class WarpableRigidbody2D : RigidBody2D
     public static readonly List<WarpableRigidbody2D> Instances = new();
 
     private Vector2 _warpPosition;
-    private bool _isWarping;
+    private bool _warping;
 
     public override void _IntegrateForces(PhysicsDirectBodyState2D state)
     {
         base._IntegrateForces(state);
 
-        if (!_isWarping) { return; }
-        _isWarping = false;
+        if (!_warping) { return; }
+        _warping = false;
 
         state.LinearVelocity = Vector2.Zero;
         state.AngularVelocity = 0f;
@@ -40,6 +40,6 @@ public partial class WarpableRigidbody2D : RigidBody2D
     public void WarpToGlobalPosition(Vector2 globalPosition)
     {
         _warpPosition = globalPosition;
-        _isWarping = true;
+        _warping = true;
     }
 }

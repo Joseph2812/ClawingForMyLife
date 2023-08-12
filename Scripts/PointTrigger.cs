@@ -14,8 +14,6 @@ public partial class PointTrigger : Area2D
     private Node2D _end;
     private AudioStreamPlayer2D _chuteSfx;
 
-    private readonly List<WarpableRigidbody2D> _bodiesToMove = new();
-
     public PointTrigger() { PlayerCaughtInChute = null; }
 
     public override void _Ready()
@@ -30,19 +28,6 @@ public partial class PointTrigger : Area2D
         BodyEntered += OnBodyEntered;
     }
 
-    public override void _PhysicsProcess(double delta)
-    {
-        base._PhysicsProcess(delta);
-
-        if (_bodiesToMove.Count == 0) { return; }
-        
-        foreach (WarpableRigidbody2D body in _bodiesToMove)
-        {
-            body.WarpToGlobalPosition(new Vector2((float)GD.RandRange(_begin.GlobalPosition.X, _end.GlobalPosition.X), _begin.GlobalPosition.Y));
-        }
-        _bodiesToMove.Clear();
-    }
-
     private void OnBodyEntered(Node body)
     {
         _chuteSfx.Play();
@@ -55,11 +40,11 @@ public partial class PointTrigger : Area2D
             return;
         }
 
-        _score += 1;
+        _score++;
         _scoreLabel.Text = _score.ToString("D3");
 
-        PrizeBall wRb = (PrizeBall)body;
-        _bodiesToMove.Add(wRb);
-        wRb.TopSelfModulate = Color.FromHsv(GD.Randf(), 1f, 1f);
+        PrizeBall ball = (PrizeBall)body;
+        ball.TopSelfModulate = Color.FromHsv(GD.Randf(), 1f, 1f);
+        ball.WarpToGlobalPosition(new Vector2((float)GD.RandRange(_begin.GlobalPosition.X, _end.GlobalPosition.X), _begin.GlobalPosition.Y));
     }
 }

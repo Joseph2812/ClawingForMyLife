@@ -24,12 +24,12 @@ public partial class ClawsController : Node2D
 
     public static ClawsController Inst { get; private set; }
 
+    private static readonly Vector2 _localLowerBound = new(1f, 13f);
+    private static readonly Vector2 _localUpperBound = new(33f, 88f);
+
     public event Action SpeedIncrease;
 
     public Vector2 BaseGlobalPosition => _baseController.GlobalPosition;
-
-    private static readonly Vector2 _localLowerBound = new(1f, 13f);
-    private static readonly Vector2 _localUpperBound = new(33f, 88f);
 
     private Tween _tween;
     private State _state = State.Dropping;
@@ -57,7 +57,24 @@ public partial class ClawsController : Node2D
 	private RigidBody2D _clawR;
     private AudioStreamPlayer2D _clawSfx;
 
-    public ClawsController() { Inst = this; }
+    private readonly Callable _positionAndGrabCall;
+    private readonly Callable _openClawsCall;
+    private readonly Callable _closeClawsCall;
+    private readonly Callable _increaseSpeedCall;
+    private readonly Callable _baseUpCall;
+    private readonly Callable _baseDownCall;  
+
+    public ClawsController()
+    { 
+        Inst = this;
+
+        _positionAndGrabCall = Callable.From(PositionAndGrab);
+        _openClawsCall       = Callable.From(OpenClaws);
+        _closeClawsCall      = Callable.From(CloseClaws);
+        _increaseSpeedCall   = Callable.From(IncreaseSpeed);
+        _baseUpCall          = Callable.From(() => _baseController.VerticalSpeed = -_speed);
+        _baseDownCall        = Callable.From(() => _baseController.VerticalSpeed = _speed);
+    }
 
     public override void _Ready()
     {
@@ -115,14 +132,6 @@ public partial class ClawsController : Node2D
 
         _state = State.Grabbing;
 
-        if (++_dropCount == DropsPerSpeedIncrease)
-        {
-            _dropCount = 0;
-            _speed = Mathf.Clamp(_speed + SpeedStep, SpeedInitial, SpeedCap);
-
-            SpeedIncrease?.Invoke();
-        }
-
         _tween.Kill();
         _tween = CreateTween();
         _tween.SetProcessMode(Tween.TweenProcessMode.Physics);
@@ -134,9 +143,9 @@ public partial class ClawsController : Node2D
             _localUpperBound.X
          );
         _tween.TweenProperty(_root, "position:x", targetLocalX, GetDuration(_root.Position.X, targetLocalX));
-        _tween.TweenCallback(Callable.From(OpenClaws));
+        _tween.TweenCallback(_openClawsCall);
         _tween.TweenInterval(1d);
-        _tween.TweenCallback(Callable.From(() => _baseController.VerticalSpeed = _speed));
+        _tween.TweenCallback(_baseDownCall);
         _tween.Play();
     }
 
@@ -152,7 +161,7 @@ public partial class ClawsController : Node2D
         _tween.SetProcessMode(Tween.TweenProcessMode.Physics);
 
         _tween.TweenInterval(1d);
-        _tween.TweenCallback(Callable.From(() => _baseController.VerticalSpeed = -_speed));
+        _tween.TweenCallback(_baseUpCall);
         _tween.Play();
     }
 
@@ -167,11 +176,12 @@ public partial class ClawsController : Node2D
         _tween.SetProcessMode(Tween.TweenProcessMode.Physics);
 
         _tween.TweenProperty(_root, "position:x", ChuteLocalX, GetDuration(_root.Position.X, ChuteLocalX));
-        _tween.TweenCallback(Callable.From(OpenClaws));
+        _tween.TweenCallback(_openClawsCall);
         _tween.TweenInterval(1d);
-        _tween.TweenCallback(Callable.From(CloseClaws));
+        _tween.TweenCallback(_closeClawsCall);
+        _tween.TweenCallback(_increaseSpeedCall);
         _tween.TweenInterval(1d);
-        _tween.TweenCallback(Callable.From(PositionAndGrab));
+        _tween.TweenCallback(_positionAndGrabCall);
         _tween.Play();
     }
 
@@ -188,6 +198,17 @@ public partial class ClawsController : Node2D
         _clawR.ConstantTorque = Torque;
 
         _clawSfx.Play();
+    }
+
+    private void IncreaseSpeed()
+    {
+        if (++_dropCount == DropsPerSpeedIncrease)
+        {
+            _dropCount = 0;
+            _speed = Mathf.Clamp(_speed + SpeedStep, SpeedInitial, SpeedCap);
+
+            SpeedIncrease?.Invoke();
+        }
     }
 
     private float GetDuration(float fromX, float toX) => Mathf.Abs(toX - fromX) * _inverseSpeed;
